@@ -2,13 +2,6 @@
 
 This repository contains a simple implementation of a **Linked List** data structure with two classes: `LinkedList` and `Node`.
 
-## Table of Contents
-
-1. [LinkedList Class](#linkedlist-class)
-2. [Node Class](#node-class)
-3. [Methods](#methods)
-4. [Usage Example](#usage-example)
-
 ## LinkedList Class
 
 The `LinkedList` class provides methods for adding, removing, and interacting with nodes in the list.
