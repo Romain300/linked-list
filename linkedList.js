@@ -28,7 +28,7 @@ class linkedList {
     prepend(value) {
         const newNode = new node(value);
         if(Object.keys(this.list).length === 0) {
-            this.list["head"] === newNode;
+            this.list["head"] = newNode;
         } else {
             const currentHead = this.list["head"];
             newNode.nextNode = currentHead;
@@ -42,18 +42,16 @@ class linkedList {
         if(Object.keys(this.list).length === 0) {
             return 0;
         } else {
-            checkEnd(this.list["head"]);
-            return i;
-            
+            return checkEnd(this.list["head"]);
         };
 
         //checking tail and i incrementation
         function checkEnd(node) {
-            i++;
-            if (node.nextNode === null) {
-                return;
+            if (!node) {
+                return i;
             } else {
-                checkEnd(node.nextNode);
+                i++;
+                return checkEnd(node.nextNode);
             }; 
         };
     };
@@ -79,11 +77,98 @@ class linkedList {
     };
 
 
+    at(index) {
+        let i = 0;
+        return findIndex(this.list["head"]);
+
+        function findIndex(node) {
+            if(node) {
+                i++;
+                if(i !== index) {
+                    return findIndex(node.nextNode)
+                } else {
+                    return node
+                }
+            } 
+        };
+    };
 
 
+    pop() {
+        if(!this.list["head"].nextNode) {
+            this.list = {};
+            return;
+        }
+        const newLastElement = findSecondLast(this.list["head"]);
+        newLastElement.nextNode = null
+
+        function findSecondLast(node) {
+            if(node.nextNode.nextNode === null) {
+                return node;
+            } else {
+                return findSecondLast(node.nextNode);
+            }
+        };
+    };
+
+    
+    contains(value) {
+        return checkValueNode(this.list["head"]);
+
+        function checkValueNode(node) {
+            if(node) {
+                if (node.value == value) {
+                    return true;
+                 } else {
+                    return checkValueNode(node.nextNode)
+                 };
+            } else {
+                return false;
+            }      
+        } ;
+    };
 
 
-}
+    find(value) {
+        let i = 0;
+        return checkValueEqual(this.list["head"]);
+
+        function checkValueEqual(node) {
+            i++;
+            if(node) {
+                if(node.value == value) {
+                    return i;
+                } else {
+                    return checkValueEqual(node.nextNode);
+                }
+            } else {
+                return null;
+            }
+        };
+    };
+
+
+    toString() {
+        let stringValue = "";
+        const head = this.list["head"];
+        return concatValue(this.list["head"]);
+
+        function concatValue(node) {
+            if(node && node === head) {
+                stringValue = stringValue.concat("", `( ${node.value} )`);
+                return concatValue(node.nextNode) ;
+            } else if(node && node.nextNode !== null) {
+                stringValue = stringValue.concat(" -> ", `( ${node.value} )`);
+                return concatValue(node.nextNode) ;
+            } else if(node && node.nextNode === null) {
+                stringValue = stringValue.concat(" -> ", `( ${node.value} ) -> null`);
+                return concatValue(node.nextNode) ;
+            } else {
+                return stringValue;
+            }    
+        };
+    };
+};
 
 
 class node {
@@ -93,20 +178,20 @@ class node {
     };
 };
 
-const newNode = "1st node";
-const hello = "2nd node"
-const yes = "3rd node";
-const okay = "4th node";
+
+// example
+const list = new linkedList();
+
+list.append("dog");
+list.append("cat");
+list.append("parrot");
+list.append("hamster");
+list.append("snake");
+list.append("turtle");
+console.log(list.toString());
 
 
 
 
-const newList = new linkedList();
-newList.append(newNode);
-newList.append(hello)
-newList.append(yes)
-newList.prepend(okay)
-console.log(newList)
-console.log(newList.size())
-console.log(newList.head())
-console.log(newList.tail())
+
+
